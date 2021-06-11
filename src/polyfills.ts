@@ -63,3 +63,15 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+
+/***************************************************************************************************
+ * ENVIRONMENT & CONFIG VARIABLES
+ */
+declare const window: any;
+import { config } from './configs/config';
+import { environment } from './environments/environment';
+
+if (window) {
+    window.config = { ...config, ...environment };
+}

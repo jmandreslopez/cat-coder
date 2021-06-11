@@ -1,20 +1,30 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Env #
+.env
+.env.local
+.env.prod
+.env.uat
+.env.dev
+config/env.js
+src/environments/*.ts
+!src/environments/environment.ts
+src/app.json
+package-lock.json
+
 # compiled output
 /dist
 /tmp
 /out-tsc
-# Only exists if Bazel was run
-/bazel-out
 
 # dependencies
 /node_modules
-
-# profiling files
-chrome-profiler-events*.json
+/bower_components
 
 # IDEs and editors
 /.idea
+.angulardoc.json
+.vscode
 .project
 .classpath
 .c9/
@@ -28,7 +38,8 @@ chrome-profiler-events*.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
+.idea
+*.swp
 
 # misc
 /.sass-cache
@@ -36,10 +47,20 @@ chrome-profiler-events*.json
 /coverage
 /libpeerconnection.log
 npm-debug.log
-yarn-error.log
+/npm-debug.log.*
 testem.log
 /typings
+logs
+*.log
+!yarn.lock
+
+# e2e
+/e2e/*.js
+/e2e/*.map
 
 # System Files
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Icon?
+src/__ngcc*
