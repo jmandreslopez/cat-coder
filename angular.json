@@ -7,7 +7,26 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
         },
         "@schematics/angular:application": {
           "strict": true
@@ -20,12 +39,13 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "preserveSymlinks": true,
             "assets": [
               {
                 "glob": "**/*",
@@ -115,6 +135,72 @@
             "styles": [],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "preserveSymlinks": true,
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            },
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "cat-coder:build:development",
+              "serverTarget": "cat-coder:server:development"
+            },
+            "production": {
+              "browserTarget": "cat-coder:build:production",
+              "serverTarget": "cat-coder:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "development": {
+              "browserTarget": "cat-coder:build:development",
+              "serverTarget": "cat-coder:server:development"
+            },
+            "production": {
+              "browserTarget": "cat-coder:build:production",
+              "serverTarget": "cat-coder:server:production"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
