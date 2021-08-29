@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'amz-home',
+    selector: 'tcc-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })

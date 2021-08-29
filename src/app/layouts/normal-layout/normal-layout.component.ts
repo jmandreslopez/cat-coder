@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'amz-normal-layout',
+    selector: 'tcc-normal-layout',
     templateUrl: './normal-layout.component.html',
     styleUrls: ['./normal-layout.component.scss']
 })

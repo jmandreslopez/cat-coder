@@ -37,20 +37,23 @@ export class ConfigService {
     // APP
     //****************************************************************************************
 
+    // REQUIRED
     public getAppKey(): string {
-        return this.getVariable('app_key', 'amazing');
+        return this.getVariable('app_key', undefined);
     }
 
+    // REQUIRED
     public getAppName(): string {
-        return this.getVariable('app_name', 'Amazing');
+        return this.getVariable('app_name', undefined);
     }
 
     //****************************************************************************************
     // COOKIES
     //****************************************************************************************
 
+    // REQUIRED
     public getCookieDomain(): string {
-        return this.getVariable('cookie_domain', 'amazing.com');
+        return this.getVariable('cookie_domain', undefined);
     }
 
     //****************************************************************************************
