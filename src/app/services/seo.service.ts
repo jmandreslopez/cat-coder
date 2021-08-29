@@ -51,9 +51,7 @@ export class SEOService implements OnInit, OnDestroy {
 
     private onBreadcrumbs(breadcrumbs: Array<Breadcrumb>): any {
 
-        if (_.isUndefined(breadcrumbs) ||
-            _.isEmpty(breadcrumbs)) {
-
+        if (_.isUndefined(breadcrumbs) || _.isEmpty(breadcrumbs)) {
             return; // break
         }
 
@@ -74,36 +72,32 @@ export class SEOService implements OnInit, OnDestroy {
         return url.split(/[?#]/)[0];
     }
 
-    // private getTitle(tags: any) {
+    private getTitle(tags: any = {}) {
 
-    //     if (_.isUndefined(tags.title)) {
-    //         return ''; // break
-    //     }
+        if (!_.isUndefined(tags.title) && tags.title !== this.configService.getAppName()) {
+            return `${tags.title} | ${this.configService.getAppName()}`;
+        }
 
-    //     // Check Title
-    //     if (tags.title !== this.configService.getAppName()) {
-    //         return `${tags.title} | ${this.configService.getAppName()}`;
-    //     }
+        return this.configService.getAppName();
+    }
 
-    //     return this.configService.getAppName();
-    // }
+    public updateTags(tags: any = {}) {
 
-    public updateTags(custom?: any) {
-        const tags = {
-            title: this.configService.getAppName(),
+        tags = {
+            ...tags,
+            title: this.getTitle(tags),
             description: this.configService.getSEODescription(),
-            // url: this.getPathFromUrl(this.domService?.window?.location?.href),
+            ogDescription: this.configService.getSEODescription(),
+            url: this.getPathFromUrl(this.domService?.window?.location?.href),
             image: this.configService.getSEOImageUrl(),
             type: 'website',
             locale: 'en_US',
-            ogDescription: this.configService.getSEODescription(),
-            ...custom,
         };
 
-        // Set Title
-        // tags.title = this.getTitle(tags);
-
+        // Update Title
         this.title.setTitle(tags.title);
+
+        // Update Metatags
         this.meta.updateTag({ name: 'description', content: tags.description });
         this.meta.updateTag({ property: 'og:url', content: tags.url });
         this.meta.updateTag({ property: 'og:title', content: tags.title });

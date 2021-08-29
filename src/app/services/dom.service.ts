@@ -18,12 +18,8 @@ export class DOMService {
         return this._document;
     }
 
-    // get window(): Window | null {
-    //     return this._document.defaultView;
-    // }
-
-    get window(): Window {
-        return getWindow();
+    get window(): Window | null {
+        return this._document.defaultView || getWindow();
     }
 
     get location(): Location {
