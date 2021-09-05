@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, Observer, Subscription } from 'rxjs';
 import { filter, share } from 'rxjs/operators';
 
 // App
-import { ConfigService } from '../config/config.service';
+import { ConfigService } from '@app/config';
 import { App } from '../models/app.model';
 
 @Injectable({

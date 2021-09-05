@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import * as _ from 'lodash';
 
 // App
-import { ConfigService } from '../config/config.service';
+import { ConfigService } from '@app/config';
 
 @Injectable({
     providedIn: 'root'
