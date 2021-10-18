@@ -7,7 +7,7 @@ import { filter, share } from 'rxjs/operators';
 
 // App
 import { ConfigService } from '@app/config';
-import { App } from '../models/app.model';
+import { App } from '@app/models';
 
 @Injectable({
     providedIn: 'root'
@@ -17,17 +17,19 @@ export class AppService implements OnInit, OnDestroy {
     // Angular Universal: Browser check
     static isBrowser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    protected subscriptions: Array<Subscription> = [];
-    protected app: App;
-    protected app$: Observable<App>;
-    protected appObserver: Observer<App>;
-    protected elementRef: ElementRef;
-    protected loading: boolean = false;
-    protected error: boolean = false;
+    private subscriptions: Array<Subscription> = [];
+    private app: App;
+    private app$: Observable<App>;
+    private appObserver: Observer<App>;
+    private elementRef: ElementRef;
+
+    // States
+    private loading: boolean = false;
+    private error: boolean = false;
 
     constructor(@Inject(PLATFORM_ID) private platformId: any,
-                protected configService: ConfigService,
-                protected router: Router) {
+                private configService: ConfigService,
+                private router: Router) {
 
         // Determine App type
         AppService.isBrowser.next(isPlatformBrowser(platformId));
@@ -56,7 +58,7 @@ export class AppService implements OnInit, OnDestroy {
         return !_.isUndefined(this.getApp()) ? true : false;
     }
 
-    protected shareApp() {
+    private shareApp() {
         this.appObserver?.next?.(this.getApp());
     }
 
@@ -64,7 +66,7 @@ export class AppService implements OnInit, OnDestroy {
         this.app = undefined;
     }
 
-    protected destroyApp() {
+    private destroyApp() {
         this.cleanApp();
         this.appObserver?.complete?.();
     }
@@ -105,11 +107,11 @@ export class AppService implements OnInit, OnDestroy {
     // OBSERVABLES
     //****************************************************************************************
 
-    protected initObservables() {
+    private initObservables() {
         this.app$ = new Observable<App>((observer: any) => this.appObserver = observer).pipe(share());
     }
 
-    protected bindObservables() {
+    private bindObservables() {
         this.subscriptions = [
             this.getAppObservable().subscribe((app: App) => this.onApp(app)),
             this.router.events.pipe(filter((event: any) => event instanceof NavigationStart))
@@ -117,11 +119,11 @@ export class AppService implements OnInit, OnDestroy {
         ];
     }
 
-    protected checkObservables() {
+    private checkObservables() {
         //
     }
 
-    protected destroyObservables() {
+    private destroyObservables() {
         this.subscriptions.forEach((subscription: Subscription) => subscription?.unsubscribe());
     }
 
@@ -133,7 +135,7 @@ export class AppService implements OnInit, OnDestroy {
     // EVENTS
     //****************************************************************************************
 
-    protected onApp(app: App): any {
+    private onApp(app: App): any {
 
         if (_.isUndefined(app)) {
             return; // break
@@ -143,7 +145,7 @@ export class AppService implements OnInit, OnDestroy {
         this.elementRef?.nativeElement?.setAttribute?.('app-version', app.version);
     }
 
-    protected onNavigationStart(event: NavigationStart) {
+    private onNavigationStart(event: NavigationStart) {
 
         // Only if Debug is enabled
         if (! this.configService.isDebug()) {

@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
 // App
-import { ConfigService } from '../config/config.service';
+import { ConfigService } from '@app/config';
 import { DOMService } from './dom.service';
 
 @Injectable({
@@ -85,11 +85,11 @@ export class SEOService implements OnInit, OnDestroy {
 
         tags = {
             ...tags,
-            title: this.getTitle(tags),
-            description: this.configService.getSEODescription(),
-            ogDescription: this.configService.getSEODescription(),
+            title: this.getTitle(tags) || '',
+            description: this.configService.getSEODescription() || '',
+            ogDescription: this.configService.getSEODescription() || '',
+            image: this.configService.getSEOImageUrl() || '',
             url: this.getPathFromUrl(this.domService?.window?.location?.href),
-            image: this.configService.getSEOImageUrl(),
             type: 'website',
             locale: 'en_US',
         };

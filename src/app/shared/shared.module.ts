@@ -16,6 +16,9 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 // Options
 import { LaddaOptions, ToastrOptions } from '@app/options';
 
+// Pipes
+import { ExcludesPipe, IncludesPipe, PlaceholderPipe, SafePipe, TimesPipe } from '@app/pipes';
+
 // Components
 import { NavigationComponent } from './components';
 
@@ -37,7 +40,16 @@ import { NavigationComponent } from './components';
         // ToastContainerModule, // ngx-toastr
     ],
     declarations: [
+
+        // Components
         NavigationComponent,
+
+        // Pipes
+        ExcludesPipe,
+        IncludesPipe,
+        PlaceholderPipe,
+        SafePipe,
+        TimesPipe,
     ],
     exports: [
         CommonModule,
@@ -57,6 +69,13 @@ import { NavigationComponent } from './components';
 
         // Components
         NavigationComponent,
+
+        // Pipes
+        ExcludesPipe,
+        IncludesPipe,
+        PlaceholderPipe,
+        SafePipe,
+        TimesPipe,
     ],
     providers: []
 })

@@ -1,0 +1,39 @@
+<div class="modal fade" bsModal #modal="bs-modal" tabindex="-1" role="dialog"
+    [config]="config"
+    (onShown)="onShown()"
+    (onHidden)="onHidden()">
+
+    <div class="modal-dialog modal-dialog-centered" [ngClass]="'modal-' + config.size">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <!-- Title -->
+                <h5 class="modal-title">
+                    {{ title | placeholder:'' }}
+                </h5>
+
+                <!-- Close Button -->
+                <button *ngIf="config?.close !== false" type="button" class="btn-close pull-end" (click)="modal.hide()">
+                    <!-- <i class="far fa-times"></i> -->
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <ng-content></ng-content>
+
+            </div>
+
+            <!-- Headers -->
+            <ng-container *ngIf="footerTemplate"
+                [ngTemplateOutlet]="footerTemplate">
+            </ng-container>
+
+        </div>
+
+    </div>
+
+</div>

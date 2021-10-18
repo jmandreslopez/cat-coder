@@ -17,19 +17,19 @@ export class ConfigService {
         };
     }
 
-    private getVariable(key: any, backup: any) {
+    private getVariable(key: any, backup?: any) {
 
         // Key Value
-        if (!_.isNil(this.variables) && !_.isNil(this.variables[key])) {
+        if (this.variables?.[key]) {
             return this.variables[key];
         }
 
-        // Default
+        // Backup Value
         if (!_.isUndefined(backup)) {
             return backup;
         }
 
-        // Throw Exception
+        // Error
         throw new Error(`Missing key - '${key}'`);
     }
 
@@ -39,12 +39,21 @@ export class ConfigService {
 
     // REQUIRED
     public getAppKey(): string {
-        return this.getVariable('app_key', undefined);
+        return this.getVariable('app_key');
     }
 
     // REQUIRED
     public getAppName(): string {
-        return this.getVariable('app_name', undefined);
+        return this.getVariable('app_name');
+    }
+
+    //****************************************************************************************
+    // API
+    //****************************************************************************************
+
+    // REQUIRED
+    public getApiUrl(): string {
+        return this.getVariable('api_url');
     }
 
     //****************************************************************************************
@@ -53,7 +62,7 @@ export class ConfigService {
 
     // REQUIRED
     public getCookieDomain(): string {
-        return this.getVariable('cookie_domain', undefined);
+        return this.getVariable('cookie_domain');
     }
 
     //****************************************************************************************
@@ -69,20 +78,11 @@ export class ConfigService {
     }
 
     //****************************************************************************************
-    // ENVIRONMENT
+    // INTERFACE
     //****************************************************************************************
 
-    // REQUIRED
-    public getEnvironment(): string {
-        return this.getVariable('environment', undefined);
-    }
-
-    public isDevelopmentEnvironment(): boolean {
-        return this.getEnvironment() === 'dev';
-    }
-
-    public isProdEnvironment(): boolean {
-        return this.getEnvironment() === 'prod';
+    public getInterfaceModalsSize(): string {
+        return this.getVariable('interface_modals_size', 'lg');
     }
 
     //****************************************************************************************
@@ -90,11 +90,35 @@ export class ConfigService {
     //****************************************************************************************
 
     public getSEODescription(): string {
-        return this.getVariable('seo_description', '');
+        return this.getVariable('seo_description');
     }
 
     public getSEOImageUrl(): string {
-        return this.getVariable('seo_image_url', '');
+        return this.getVariable('seo_image_url');
+    }
+
+    //****************************************************************************************
+    // STORAGE KEYS
+    //****************************************************************************************
+
+    public getStorageKeyTheme(): string {
+        return this.getVariable('storage_key_theme', 'theme');
+    }
+
+    //****************************************************************************************
+    // THEMES
+    //****************************************************************************************
+
+    public getThemeOptions(): Array<string> {
+        return this.getVariable('theme_options', ['dark', 'light', 'auto']);
+    }
+
+    public getThemeDefault(): string {
+        return this.getVariable('theme_default', 'dark');
+    }
+
+    public isThemeSelectorEnabled(): boolean {
+        return this.getVariable('theme_selector_enabled', false);
     }
 
 }
